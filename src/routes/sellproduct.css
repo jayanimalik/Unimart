@@ -1,0 +1,56 @@
+.sell-product-container {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    padding: 50px;
+    text-align: center; /* Center align content */
+  }
+  
+  .sell-product-container h2 {
+    color: #df912c;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    display: inline-block; /* Display as inline block to reduce length */
+    width: 60%; /* Reduce width of input containers */
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left; /* Left align label text */
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .form-group select {
+    appearance: none;
+  }
+  
+  .form-group input[type="file"] {
+    padding: 6px;
+  }
+  
+  button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #df912c;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #ffae42;
+  }
+  

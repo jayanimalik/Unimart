@@ -1,0 +1,57 @@
+.maintext {
+  background: #252525;
+}
+
+.text {
+  background: #ffffff;
+  padding: 3rem 3rem;
+  border-radius: 42px;
+  top: 20px;
+  text-align: left;
+}
+
+.text div1 {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+
+.text div2 {
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+
+.text div3 {
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+
+.line {
+  border-left: 3px solid #c8c8c8;
+  height: 139px;
+}
+
+.text {
+  display: flex;
+}
+
+@media (max-width: 850px) {
+  .text {
+    border-radius: 50px;
+    padding: 2rem; /* Adjust padding for smaller screens */
+  }
+  .line {
+    padding: 0 5px;
+  }
+
+  .text div1,
+  .text div2,
+  .text div3 {
+    width: 100%; /* Make the columns 100% width on small screens */
+    margin-left: 0; /* Remove the left margin on small screens */
+  }
+}

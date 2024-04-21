@@ -1,0 +1,127 @@
+.NavbarItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #252525;
+  padding: 0 30px;
+  box-shadow: 0 5px 15px 0 rgba(156, 96, 96, 0.25);
+  width: 95%;
+  height: 80px;
+  border-radius: 15px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  grid-gap: 10px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  white-space: nowrap;
+}
+
+.nav-links i {
+  padding-right: 10px;
+}
+
+.nav-links:hover {
+  background: #d9d9d966;
+  border-radius: 40px;
+  transition: 0.3s ease-in-out;
+}
+
+.menu-icons {
+  display: none;
+  cursor: pointer;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: left;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px; /* Increased margin for spacing */
+  width: 300px; /* Increased width of the search bar */
+}
+
+.search-bar button {
+  padding: 10px;
+  background-color: #f8bc45;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #f39c12;
+}
+
+@media screen and (max-width: 850px) {
+  .NavbarItems {
+    z-index: 99;
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #252525;
+    width: 97%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    opacity: 1;
+    align-items: stretch;
+    padding: 80px 0 30px 0;
+    margin: 0;
+    transition: 0.3s ease-in-out;
+    border-radius: 13px;
+  }
+
+  .nav-menu.active {
+    left: 0;
+    opacity: 1;
+    z-index: -1;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+  }
+
+  .nav-links {
+    display: block;
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 2rem 0;
+  }
+
+  .nav-links:hover {
+    background: #01959a;
+    transition: 0.3s ease-in-out;
+  }
+
+  .menu-icons {
+    display: block;
+  }
+}
