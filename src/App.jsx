@@ -1,7 +1,7 @@
 import "./styles.css";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import About from "./routes/About";
-import Join from "./routes/Join";
+import Join from "./routes/Cart";
 import { Auth0Provider } from "@auth0/auth0-react";
 import Sellproduct from "./routes/sellproduct";
 import Profile from "./components/Profile";
