@@ -9,7 +9,7 @@ export const MenuItems = [
     title: "Sell your product",
     url: "/sellproduct",
     cname: "nav-links",
-    icon: "fa-solid fa-arrow-pointer"
+    icon: "fa-solid fa-stamp" 
   },
   {
     title: "Cart",
