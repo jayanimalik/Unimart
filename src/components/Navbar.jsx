@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import "./NavbarStyles.css";
 import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
@@ -13,7 +12,10 @@ class Navbar extends Component {
   };
 
   handleClick = () => {
-    this.setState({ clicked: !this.state.clicked });
+    const newClickedState = !this.state.clicked;
+    this.setState({ clicked: newClickedState }, () => {
+      document.body.classList.toggle('no-scroll', this.state.clicked);
+    });
   };
 
   handleSearchChange = (e) => {
@@ -38,7 +40,6 @@ class Navbar extends Component {
               <i className="fas fa-search"></i>
             </button>
           </div>
-
         </div>
         <div className="menu-icons" onClick={this.handleClick}>
           <i className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
@@ -52,10 +53,9 @@ class Navbar extends Component {
               </Link>
             </li>
           ))}
-          <li >
-            <LoginButton className="nav-links" />
+          <li className="login-button-container">
+            <LoginButton className="nav-links login-button" />
           </li>
-
         </ul>
       </nav>
     );

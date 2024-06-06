@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/join" element={<Join />}></Route>
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<About />}></Route>
             <Route path="/sellproduct" element={<Sellproduct />}></Route>
           </Routes>
