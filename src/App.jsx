@@ -6,7 +6,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import SellProduct from "./routes/sellproduct";
 import CartPage from './components/CartPage';
 //import ProtectedRoute from './components/ProtectedRoute';
-import Profile from "./components/Profile";
+import Profile from "./routes/Profile";
 import { CartProvider } from './components/CartContext';
 
 const domain = "chaitanya231971.jp.auth0.com";
