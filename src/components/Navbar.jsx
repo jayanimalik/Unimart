@@ -27,7 +27,7 @@ class Navbar extends Component {
       <nav className="NavbarItems">
         <div className="navbar-left">
           <Link to="/" className="navbar-logo">
-            <img alt="Unimart Logo" src={logo} width={110} />
+            <img alt="UniPal Logo" src={logo} width={110} />
           </Link>
           <div className="search-bar">
             <input

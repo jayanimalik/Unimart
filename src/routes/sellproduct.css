@@ -4,9 +4,10 @@
 .sell-product-container {
   background-color: #000;
   color: #fff;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Merriweather', serif;
   padding: 80px 50px 50px; /* Add padding to the top */
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .sell-product-container h2 {
@@ -17,11 +18,12 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 450px;
   display: block; /* Change to block for FormField component */
   width: 60%;
   margin: 0 auto; /* Center align the form */
   max-width: 400px; /* Limit the maximum width of the form */
+    margin-bottom: 10px;
 }
 
 .form-group label {
@@ -54,11 +56,13 @@ button[type="submit"] {
   padding: 10px 20px;
   background-color: #df912c;
   border: none;
-  border-radius: 5px;
   color: #fff;
+  border-top: 10px;
   cursor: pointer;
+  margin-top: 20px; /* Adjust this value as needed to shift the button lower */
 }
 
 button[type="submit"]:hover {
   background-color: #ffae42;
 }
+

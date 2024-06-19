@@ -1,9 +1,15 @@
 export const MenuItems = [
   {
-    title: "About",
+    title: "Home",
     url: "/",
     cname: "nav-links",
-    icon: "fa-solid fa-circle-info"
+    icon: "fa-solid fa-house"
+  },
+  {
+    title: "Cart",
+    url: "/cart",
+    cname: "nav-links",
+    icon: "fa-solid fa-cart-shopping"
   },
   {
     title: "Sell your product",
@@ -11,10 +17,11 @@ export const MenuItems = [
     cname: "nav-links",
     icon: "fa-solid fa-stamp" 
   },
+  
   {
-    title: "Cart",
-    url: "/join",
+    title: "About",
+    url: "/About",
     cname: "nav-links",
-    icon: "fa-solid fa-cart-shopping"
-  }
+    icon: "fa-solid fa-circle-info"
+  },
 ];

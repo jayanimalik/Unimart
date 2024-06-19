@@ -1,0 +1,148 @@
+.body{
+    background-color: #252525;
+}
+
+.hero {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: #252525;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  .HeroImg {
+    position: relative;
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    bottom: -25%;
+    left: 50%;
+  }
+  
+  .hero-text {
+    position: relative;
+    right: -60%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: left;
+    font-family: 'Merriweather', serif;
+    top: 4%;
+  }
+  
+  .hero-text h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .hero-text p {
+    font-size: 1.1rem;
+    color: white;
+  }
+  
+  .hero-text .show {
+    position: relative;
+    color: white;
+    background: #DF921C;
+    border-radius: 190px;
+    padding: 1rem 2rem;
+    top: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .show:hover {
+    background: rgb(255, 106, 0);
+    color: #050801;
+    box-shadow: 0 0 5px rgb(255, 106, 0), 0 0 25px rgb(255, 106, 0),
+      0 0 50px rgb(255, 106, 0), 0 0 200px rgb(255, 106, 0);
+  }
+  
+  .maintext {
+    background: #ffffff;
+  font-family: 'Merriweather', serif;
+  font-size: 14px;
+  padding: 3rem 3rem;
+  border-radius: 42px;
+  top: 20px;
+  text-align: left;
+  }
+  
+  .text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .text-section1 {
+    display: flex;
+  flex-direction: column;
+  width: 33%;
+  }
+
+  .text-section2 {
+    margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  }
+
+  .text-section3 {
+    margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  }
+  
+  .text-section h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .text-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .line {
+    border-left: 3px solid #c8c8c8;
+  height: 139px;
+  }
+  
+      @media (max-width: 850px) {
+        .hero-text {
+          position: relative;
+          right: -60%;
+          transform: translate(-50%, -50%);
+          width: 100%;
+          text-align: left;
+          top: 50%;
+        }
+      
+        .greenText {
+          color: green;
+        }
+      
+        .hero-text h1 {
+          font-size: 3rem;
+          font-weight: 600;
+        }
+      
+        .hero-text p {
+          font-size: 1.3 rem;
+          color: white;
+        }
+      
+        .hero-text .show {
+          border-radius: 190px;
+          padding: 0.6rem 1.1rem;
+          font-size: 1rem;
+        }
+      
+        .HeroImg {
+          display: none;
+        }
+      }
+  
