@@ -19,7 +19,7 @@
 .form-group {
   margin-bottom: 20px;
   display: block; /* Change to block for FormField component */
-  width: 60%;
+  width: 90%;
   margin: 0 auto; /* Center align the form */
   max-width: 400px; /* Limit the maximum width of the form */
 }
