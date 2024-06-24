@@ -47,3 +47,31 @@
     background-color: #b3720b;
   }
   
+  /* Home.css for cart */
+.product-item {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.product-details {
+  margin-top: 10px;
+}
+
+.cart-button {
+  background-color: orange;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-button:hover {
+  background-color: orangered;
+}
+
+.product-details {
+  font-family: 'Merriweather', serif;
+  font-size: 15px;
+}

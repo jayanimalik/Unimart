@@ -22,6 +22,7 @@
   transform: translate(-50%, -50%);
   width: 100%;
   text-align: left;
+  font-family: 'Merriweather', serif;
   top: 4%;
 }
 
@@ -35,7 +36,7 @@
 }
 
 .hero-text p {
-  font-size: 1.3 rem;
+  font-size: 1.1 rem;
   color: white;
   /* padding: 0.5rem 0 2rem; */
 }

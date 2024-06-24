@@ -5,7 +5,7 @@ const Footer = () => {
     <div className="footer">
       <div className="top">
         <div>
-          <h1><span style={{ color: "#DF921C" }}>UniMart</span></h1>
+          <h1><span style={{ color: "#DF921C" }}>UniPal</span></h1>
           <p>Revolutionizing University E-commerce</p>
         </div>
         <div>

@@ -1,10 +1,11 @@
-import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useCart } from "../components/CartContext";
 import React from "react";
-import "./Cart.css";
+import "./Home.css";
 
 const ProductsPage = () => {
+  const { addToCart } = useCart();
   const products = [
     {
       id: 1,
@@ -80,77 +81,77 @@ const ProductsPage = () => {
     },
   ];
   
-  const paymentHandler = async (productId) => {
-    const product = products.find((p) => p.id === productId);
-    const amount = product.price;
-    const currency = "INR"; // Assuming your currency is Indian Rupees
-    const receiptId = "receipt_" + productId; // Generate a unique receipt ID for each product
+  // const paymentHandler = async (productId) => {
+  //   const product = products.find((p) => p.id === productId);
+  //   const amount = product.price;
+  //   const currency = "INR"; // Assuming your currency is Indian Rupees
+  //   const receiptId = "receipt_" + productId; // Generate a unique receipt ID for each product
 
-    const response = await fetch("http://localhost:5000/order", {
-      method: "POST",
-      body: JSON.stringify({
-        amount,
-        currency,
-        receipt: receiptId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const order = await response.json();
-    console.log(order);
+  //   const response = await fetch("http://localhost:5000/order", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       amount,
+  //       currency,
+  //       receipt: receiptId,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const order = await response.json();
+  //   console.log(order);
 
-    var options = {
-      key: "rzp_test_ndC1btUPLA6hmz",
-      amount,
-      currency,
-      name: "UniMart",
-      description: product.name,
-      image: "https://example.com/your_logo",
-      order_id: order.id,
-      handler: async function (response) {
-        const body = {
-          ...response,
-        };
+  //   var options = {
+  //     key: "rzp_test_ndC1btUPLA6hmz",
+  //     amount,
+  //     currency,
+  //     name: "UniPal",
+  //     description: product.name,
+  //     image: "https://example.com/your_logo",
+  //     order_id: order.id,
+  //     handler: async function (response) {
+  //       const body = {
+  //         ...response,
+  //       };
 
-        const validateRes = await fetch(
-          "http://localhost:5000/order/validate",
-          {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const jsonRes = await validateRes.json();
-        console.log(jsonRes);
-      },
-      prefill: {
-        name: "Web Dev Matrix",
-        email: "webdevmatrix@example.com",
-        contact: "9000000000",
-      },
-      notes: {
-        address: "Razorpay Corporate Office",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
+  //       const validateRes = await fetch(
+  //         "http://localhost:5000/order/validate",
+  //         {
+  //           method: "POST",
+  //           body: JSON.stringify(body),
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       const jsonRes = await validateRes.json();
+  //       console.log(jsonRes);
+  //     },
+  //     prefill: {
+  //       name: "Web Dev Matrix",
+  //       email: "webdevmatrix@example.com",
+  //       contact: "9000000000",
+  //     },
+  //     notes: {
+  //       address: "Razorpay Corporate Office",
+  //     },
+  //     theme: {
+  //       color: "#3399cc",
+  //     },
+  //   };
 
-    var rzp1 = new window.Razorpay(options);
-    rzp1.on("payment.failed", function (response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
-    });
-    rzp1.open();
-  };
+  //   var rzp1 = new window.Razorpay(options);
+  //   rzp1.on("payment.failed", function (response) {
+  //     alert(response.error.code);
+  //     alert(response.error.description);
+  //     alert(response.error.source);
+  //     alert(response.error.step);
+  //     alert(response.error.reason);
+  //     alert(response.error.metadata.order_id);
+  //     alert(response.error.metadata.payment_id);
+  //   });
+  //   rzp1.open();
+  // };
 
   const renderProducts = () => {
     return products.map((product, index) => (
@@ -162,7 +163,7 @@ const ProductsPage = () => {
           <p>Price: {product.price}</p>
           <p>Category: {product.category}</p>
           <p>Seller: {product.seller}</p>
-          <button className="buy-button" onClick={() => paymentHandler(product.id)}>Buy</button>
+          <button className="cart-button" onClick={() => addToCart(product)}>Add to Cart</button>
         </div>
       </div>
     ));
