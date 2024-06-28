@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./NavbarStyles.css";
 import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
-import logo from "../assets/yellowlogo.png";
+import logo from "../assets/unipal_logo.png";
 import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0 hook
 import LoginButton from "./LoginButton";
 

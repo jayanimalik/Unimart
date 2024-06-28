@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import AboutImg from "../assets/yellowlogo.png";
+import AboutImg from "../assets/unipal_logo.png";
 import Footer from "../components/Footer";
 import "./About.css";
 

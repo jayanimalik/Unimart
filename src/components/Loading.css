@@ -1,0 +1,22 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+  }
+  
+  .loading-logo {
+    width: 150px;
+    animation: flash 1.5s infinite;
+  }
+  
+  @keyframes flash {
+    0%, 50%, 100% {
+      opacity: 1;
+    }
+    25%, 75% {
+      opacity: 0;
+    }
+  }
+  
