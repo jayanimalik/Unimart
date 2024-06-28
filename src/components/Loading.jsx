@@ -1,25 +1,20 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import "./Loading.css";
-import logo from "../assets/logo.png"; // Ensure correct path
+import logo from "../assets/unipal_logo.png"; // Ensure this path is correct
 
-const Loading = ({ setInitialLoad }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setInitialLoad(false);
-      navigate("/home");
-    }, 3000); // Display for 3 seconds
-
-    return () => clearTimeout(timer);
-  }, [navigate, setInitialLoad]);
+const Loader = ({ setIsLoading }) => {
+  const handleGetStarted = () => {
+    setIsLoading(false);
+  };
 
   return (
-    <div className="loading-container">
-      <img src={logo} alt="UniPal Logo" className="loading-logo" />
+    <div className="loader">
+      <div className="svg-wrapper">
+        <img src={logo} alt="UniPal Logo" className="loading-logo" />
+        <button className="get-started-button" onClick={handleGetStarted}>Get Started</button>
+      </div>
     </div>
   );
 };
 
-export default Loading;
+export default Loader;
