@@ -1,77 +1,59 @@
-.products-container {
-    background-color: black;
-    color: white;
-    padding: 20px;
-  }
+/* Home.css */
 
-  .product-item img {
-    width: 100%; /* Adjust width as needed */
-    height: 450px; /* Adjust height as needed */
-    object-fit: cover; /* Maintain aspect ratio */
-  }
-  
-  .products-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns */
-    grid-gap: 20px;
-  }
-  
-  .product-item {
-    background-color: #1c1c1c;
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .product-item img {
-    max-width: 100%;
-  }
-  
-  .product-details h2 {
-    color: #df921c;
-  }
-  
-  .product-details p {
-    margin-bottom: 10px;
-  }
-  
-  .buy-button {
-    background-color: #df921c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .buy-button:hover {
-    background-color: #b3720b;
-  }
-  
-  /* Home.css for cart */
-.product-item {
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin: 10px;
-  text-align: center;
-}
-
-.product-details {
-  margin-top: 10px;
-}
-
-.cart-button {
-  background-color: orange;
+.products-page {
+  background-color: black;
+  margin-top: 100px;
   color: white;
-  padding: 10px;
+  padding: 20px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr; /* One column */
+  }
+}
+
+.product-card {
+  background-color: #1c1c1c;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.product-card img {
+  width: 100%; /* Adjust width as needed */
+  height: 450px; /* Adjust height as needed */
+  object-fit: cover; /* Maintain aspect ratio */
+}
+
+.product-card h2 {
+  color: #df921c;
+}
+
+.product-card p {
+  margin-bottom: 10px;
+}
+
+.product-card button {
+  background-color: #df921c;
+  color: white;
   border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.cart-button:hover {
-  background-color: orangered;
-}
-
-.product-details {
-  font-family: 'Merriweather', serif;
-  font-size: 15px;
+.product-card button:hover {
+  background-color: #b3720b;
 }

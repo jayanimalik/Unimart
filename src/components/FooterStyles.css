@@ -1,63 +1,110 @@
 .footer {
-  padding: 4rem 6rem;
-  background: #252525;
+  background-color: #18181b;
   color: white;
-  font-family: 'Merriweather', serif;
+  padding: 10px;
+  text-align: center;
 }
 
-.top {
+.footer .top {
+  padding-bottom: 10px;
+}
+
+.footer .footer-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.footer .footer-subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.footer .email-container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: start;
-  justify-content: space-between;
-  flex-wrap: wrap;
 }
 
-.top i {
-  color: #fafafa;
-  font-size: 2rem;
-  margin-left: 1rem;
+.footer .email-input {
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 250px;
 }
 
-.top i:hover {
-  color: #019590;
+.footer .join-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #df921c;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.bottom {
-  padding-top: 2rem;
-  text-align: start;
+.footer .footer-divider {
+  border-left: 1px solid white;
+  height: 150px; /* Adjust height as needed */
+  margin: 0 20px;
+  align-self: center;
+}
+
+.footer .bottom {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
-.bottom div {
+.footer .left-section,
+.footer .right-section {
+  width: 45%;
+  text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.bottom h4 {
-  font-size: 1.3rem;
-  padding: 1rem 0 0.8rem 0;
+.footer .left-section h4,
+.footer .right-section h4 {
+  font-size: 20px;
+  margin-bottom: 5px; /* Reduced margin-bottom */
 }
 
-.bottom a {
-  text-decoration: none;
-  color: #fafafa;
-  padding-bottom: 0.4rem;
-  font-size: 1.1rem;
+.footer .left-section p,
+.footer .right-section p {
+  margin-top: 5px; /* Optional: Adjust margin-top of p tags if needed */
 }
 
-@media (max-width: 850px) {
-  .footer {
-    padding: 4rem 2rem;
+.footer .social-links {
+  display: flex;
+  justify-content: center;
+}
+
+.footer .social-links a {
+  color: white;
+  margin-right: 15px;
+  font-size: 24px;
+}
+
+.footer .footer-bottom {
+  padding-top: 10px;
+  font-size: 14px;
+  margin-top: 20px; /* Add space below the divider */
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .footer .left-section,
+  .footer .right-section {
+    width: 45%; /* Change to match normal screen width */
+    margin-bottom: 0; /* Remove additional space between sections */
   }
 
-  .footer i {
-    margin: 1rem 1rem 0 0;
-  }
-
-  .bottom div {
-    width: 50%;
+  .footer .footer-divider {
+    height: 150px; /* Match normal screen height */
+    margin: 0 20px; /* Match normal screen margin */
   }
 }
