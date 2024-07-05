@@ -9,7 +9,7 @@
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-template-columns: repeat(4, 1fr); /* Four columns */
   grid-gap: 20px;
 }
 
@@ -21,7 +21,7 @@
 
 @media (max-width: 480px) {
   .products-grid {
-    grid-template-columns: 1fr; /* One column */
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
   }
 }
 

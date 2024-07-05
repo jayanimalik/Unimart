@@ -50,7 +50,8 @@ function SellProduct() {
       });
 
       if (response.ok) {
-        setSuccessMessage("Product Uploaded");
+        const responseData = await response.json(); // Parse JSON response
+        setSuccessMessage(responseData.message || "Product Uploaded");
         setErrorMessage(""); // Clear any previous error messages
         setFormData({
           sellerName: "",

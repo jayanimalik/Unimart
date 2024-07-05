@@ -71,6 +71,20 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+app.post('/api/products', async (req, res) => {
+  try {
+    const { sellerName, productName, category, description, price, imageUrl, hostel, quantity } = req.body;
+
+    const newProduct = new Product({ sellerName, productName, category, description, price, imageUrl, hostel, quantity });
+    await newProduct.save();
+    res.status(201).json({ message: 'Product added successfully' }); // Send a JSON response
+  } catch (error) {
+    console.error('Error adding product:', error);
+    res.status(500).json({ message: `Error adding product: ${error.message}` }); // Send a JSON error response
+  }
+});
+
+
 // Wishlist Schema
 const wishlistSchema = new mongoose.Schema({
   userId: { type: String, required: true },
