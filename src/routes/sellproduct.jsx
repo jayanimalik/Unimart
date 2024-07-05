@@ -110,7 +110,7 @@ function SellProduct() {
               { value: "Electronics", label: "Electronics" },
               { value: "Clothing", label: "Clothing" },
               { value: "Books", label: "Books" },
-              { value: "Home & Garden", label: "Home & Garden" },
+              { value: "Sports", label: "Sports" },
               { value: "Others", label: "Others" },
             ]}
             required

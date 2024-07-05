@@ -1,7 +1,16 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import AboutImg from "../assets/unipal_logo.png";
 import Footer from "../components/Footer";
+import TeamMember1Img from "../assets/chaitanya.jpg";
+import TeamMember2Img from "../assets/jayani.jpg";
+import TeamMember3Img from "../assets/astik.jpg";
+import TeamMember4Img from "../assets/Japleen.jpg";
+import MissionImage from "../assets/image2.jpg";
+import AgendaImage from "../assets/image1.jpg";
+import ValuesImage from "../assets/image3.jpg";
+import OurStoryImage from "../assets/image4.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub, faLinkedin, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import "./About.css";
 
 const About = () => {
@@ -9,50 +18,117 @@ const About = () => {
     <>
       <Navbar />
       <div className="hero">
-        <img className="HeroImg" src={AboutImg} alt="About Hero Image" />
         <div className="hero-text">
-          <h1>
-            Revolutionizing <span style={{ color: "#DF921C" }}>E-Commerce</span>
-          </h1>
-          <p>Greetings! Welcome to UniPal Thapar University</p>
+          <h1>About <span className="highlight">UniPal</span></h1>
           <p>
-            the vibrant marketplace designed by students, for students
+          UniPal is a student-centric marketplace dedicated to fostering sustainability and affordability across college campuses worldwide. Our platform empowers students to effortlessly buy and sell second-hand items, creating meaningful connections and opportunities within their communities. Join us in building a more sustainable future for student life.
           </p>
-          <p>Join us at UniPal and discover a treasure trove of gently used items,</p>
-          <p> from textbooks to furniture, all at student-friendly prices.</p>
-          <a href="/" className="show">Explore</a>
         </div>
       </div>
-      <div className="maintext">
-        <div className="text">
-          <div className="text-section1">
-            <h3>
-              About <span style={{ color: "#DF921C" }}>UniPal</span>
-            </h3>
-            <p>
-              Discover UniPal, the student-centric marketplace fostering sustainability and affordability on campus. Buy and sell second-hand items with ease, creating connections and opportunities within our college community.
-            </p>
+      
+      
+      <div className="info-section">
+        <div className="info-content">
+          <h2>Mission</h2>
+          <img src={MissionImage} alt="Mission" className="section-image" />
+          <p>
+            At UniPal, our mission is to foster a sustainable and affordable community for students worldwide. We aim to create a platform where students can buy and sell gently used products, promoting a culture of reuse and responsible consumption.
+          </p>
+        </div>
+      </div>
+      
+      <div className="info-section dark">
+        <div className="info-content">
+          <h2>Agenda</h2>
+          <img src={AgendaImage} alt="Agenda" className="section-image" />
+          <ul>
+            <li>Promote Sustainability: Encourage the reuse of items to reduce waste and environmental impact.</li>
+            <li>Facilitate Affordability: Provide students with access to quality products at student-friendly prices.</li>
+            <li>Build Community: Create a trusted space for students to connect and support each other through buying and selling.</li>
+          </ul>
+        </div>
+      </div>
+      
+
+      <div className="team-section">
+        <h2>Our Team</h2>
+        <div className="team-cards">
+          <div className="team-card">
+            <img src={TeamMember1Img} alt="Team Member 1" className="team-member-img" />
+            <div className="team-member-info">
+              <h4>Chaitanya Jayant</h4>
+              <div className="social-links">
+                <a href="https://github.com/johndoe" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faGithub} className="social-icon" /></a>
+                <a href="https://linkedin.com/in/johndoe" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} className="social-icon" /></a>
+                <a href="https://instagram.com/johndoe" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
+              </div>
+            </div>
           </div>
-          <div className="line"></div>
-          <div className="text-section2">
-            <h3>
-              Our <span style={{ color: "#DF921C" }}>Mission</span>
-            </h3>
-            <p>
-              Our mission at UniPal is to promote a sustainable campus culture through the exchange of pre-loved goods. We aim to reduce waste, empower students, and foster affordability while embracing the principles of the circular economy.
-            </p>
+          <div className="team-card">
+            <img src={TeamMember2Img} alt="Team Member 2" className="team-member-img" />
+            <div className="team-member-info">
+              <h4>Jayani Malik</h4>
+              <div className="social-links">
+                <a href="https://github.com/janesmith" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faGithub} className="social-icon" /></a>
+                <a href="https://linkedin.com/in/janesmith" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} className="social-icon" /></a>
+                <a href="https://instagram.com/janesmith" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
+              </div>
+            </div>
           </div>
-          <div className="line"></div>
-          <div className="text-section3">
-            <h3>
-              About <span style={{ color: "#DF921C" }}>Us</span>
-            </h3>
-            <p>
-              UniPal is a student-led initiative dedicated to building a vibrant marketplace for our college community. We're committed to providing a convenient platform for students to buy and sell second-hand items, promoting sustainability and campus connections.
-            </p>
+          <div className="team-card">
+            <img src={TeamMember3Img} alt="Team Member 3" className="team-member-img" />
+            <div className="team-member-info">
+              <h4>Astik Thukral</h4>
+              <div className="social-links">
+                <a href="https://github.com/michaeljohnson" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faGithub} className="social-icon" /></a>
+                <a href="https://linkedin.com/in/michaeljohnson" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} className="social-icon" /></a>
+                <a href="https://instagram.com/michaeljohnson" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
+              </div>
+            </div>
+          </div>
+          <div className="team-card">
+            <img src={TeamMember4Img} alt="Team Member 4" className="team-member-img" />
+            <div className="team-member-info">
+              <h4>Japleen Kaur</h4>
+              <div className="social-links">
+                <a href="https://github.com/emilydavis" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faGithub} className="social-icon" /></a>
+                <a href="https://linkedin.com/in/emilydavis" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} className="social-icon" /></a>
+                <a href="https://instagram.com/emilydavis" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      
+      <div className="info-section">
+        <div className="info-content">
+          <h2>Values</h2>
+          <img src={ValuesImage} alt="Values" className="section-image" />
+          <ul>
+            <li>Community: We believe in the power of college communities and strive to strengthen them through our platform.</li>
+            <li>Sustainability: We are committed to reducing waste and promoting eco-friendly practices.</li>
+            <li>Affordability: We ensure that all prices are fair and affordable for students.</li>
+            <li>Trust: We prioritize creating a safe and trustworthy environment for all our users.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div className="info-section dark">
+        <div className="info-content">
+          <h2>Our Story</h2>
+          <img src={OurStoryImage} alt="Our Story" className="section-image" />
+          <p>
+            UniPal is a dedicated platform designed for college students worldwide. Our platform allows students to post and purchase gently used products, making it easier to find affordable and sustainable options right within their campus communities. Whether you're looking to sell your textbooks after a semester, find a second-hand laptop, or buy affordable hostel essentials, UniPal is here to help.
+          </p>
+          <p>
+            We started UniPal with the vision of making campus life more sustainable and budget-friendly. By enabling students to buy and sell within their own communities, we not only help save money but also reduce the environmental footprint of campuses. Our user-friendly interface ensures that posting an item or finding what you need is simple and hassle-free.
+          </p>
+          <p>
+            Join us in building a greener, more connected, and supportive college community. Together, we can make a difference—one transaction at a time.
+          </p>
+        </div>
+      </div>
+      
       <Footer />
     </>
   );
