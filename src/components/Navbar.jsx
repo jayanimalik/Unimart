@@ -3,11 +3,11 @@ import "./NavbarStyles.css";
 import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
 import logo from "../assets/unipal_logo.png";
-import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0 hook
+import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 
 const Navbar = ({ onSearch }) => {
-  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const { isAuthenticated, logout, user } = useAuth0();
   const [clicked, setClicked] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -19,7 +19,7 @@ const Navbar = ({ onSearch }) => {
   const handleSearchChange = (e) => {
     const searchText = e.target.value;
     setSearchText(searchText);
-    onSearch(searchText); // Call onSearch callback with current search text
+    onSearch(searchText);
   };
 
   return (
@@ -52,11 +52,21 @@ const Navbar = ({ onSearch }) => {
             </Link>
           </li>
         ))}
-        <li className="login-button-container">
-          {isAuthenticated ? (
-            <Link className="nav-links login-button" to="/profile">
+        {isAuthenticated && (
+          <li>
+            <Link className="nav-links" to="/profile">
               Profile
             </Link>
+          </li>
+        )}
+        <li className="login-button-container">
+          {isAuthenticated ? (
+            <button
+              className="nav-links login-button"
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
+              Log Out
+            </button>
           ) : (
             <LoginButton className="nav-links login-button" />
           )}
