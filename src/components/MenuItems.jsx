@@ -6,16 +6,16 @@ export const MenuItems = [
     icon: "fa-solid fa-house"
   },
   {
-    title: "Cart",
-    url: "/cart",
+    title: "Wishlist",
+    url: "/wishlist",
     cname: "nav-links",
-    icon: "fa-solid fa-cart-shopping"
+    icon: "fa-solid fa-heart"
   },
   {
     title: "Sell your product",
     url: "/sellproduct",
     cname: "nav-links",
-    icon: "fa-solid fa-stamp" 
+    icon: "fa-solid fa-comments-dollar" 
   },
   
   {

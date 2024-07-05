@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import Home from "./routes/Home";
 import About from "./routes/About";
 import SellProduct from "./routes/sellproduct";
-import CartPage from "./components/CartPage";
+import Wishlist from "./components/Wishlist";
 import Profile from "./routes/Profile";
 import Loader from "./components/Loading";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { CartProvider } from "./components/CartContext";
+import { WishlistProvider } from "./components/WishlistContext";
 
 const domain = "chaitanya231971.jp.auth0.com";
 const clientId = "F0FiBaJJrvFYewRS8DDCoXGXSPMYXYi1";
@@ -19,7 +19,7 @@ function App() {
     const fakeDataFetch = () => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 4000);
+      }, 3500);  // Reduced delay for better user experience
     };
 
     fakeDataFetch();
@@ -27,7 +27,7 @@ function App() {
 
   return (
     <Auth0Provider domain={domain} clientId={clientId} redirectUri={window.location.origin}>
-      <CartProvider>
+      <WishlistProvider>
         {isLoading ? (
           <Loader setIsLoading={setIsLoading} />
         ) : (
@@ -37,13 +37,13 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/sellproduct" element={<SellProduct />} />
-              <Route path="/cart" element={<CartPage />} />
+              <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
           </Router>
         )}
-      </CartProvider>
+      </WishlistProvider>
     </Auth0Provider>
   );
 }

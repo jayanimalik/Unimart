@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { useCart } from "../components/CartContext";
+import { useWishlist } from "../components/WishlistContext";
 import "./Home.css";
 
 const Home = () => {
-  const { addToCart, cart } = useCart();
+  const { addToWishlist } = useWishlist();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -27,23 +27,18 @@ const Home = () => {
   }, []);
 
   const renderProducts = () => {
-    return products.map((product) => {
-      const cartItem = cart.find((item) => item._id === product._id);
-      const cartQuantity = cartItem ? cartItem.quantity : 0;
-
-      return (
-        <div key={product._id} className="product-card">
-          <img src={product.imageUrl} alt={product.name} className="product-image" />
-          <div className="product-details">
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>Price: ₹{product.price}</p>
-            <p>Quantity in Cart: {cartQuantity}</p>
-            <button onClick={() => addToCart(product)}>Add to Cart</button>
-          </div>
+    return products.map((product) => (
+      <div key={product._id} className="product-card">
+        <img src={product.imageUrl} alt={product.productName} className="product-image" />
+        <div className="product-details">
+          <h2>{product.productName}</h2>
+          <p>{product.description}</p>
+          <p>Hostel: {product.hostel}</p>
+          <p>Price: ₹{product.price}</p>
+          <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
         </div>
-      );
-    });
+      </div>
+    ));
   };
 
   return (

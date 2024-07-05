@@ -5,18 +5,17 @@ import "./sellproduct.css";
 
 function SellProduct() {
   const [formData, setFormData] = useState({
-    productName: '',
-    category: '',
-    description: '',
-    price: '',
-    image: '',
-    upi_id: '',
-    hostel: '',
-    phone: '',
-    quantity: '' // Add quantity to formData state
+    sellerName: "",
+    productName: "",
+    category: "",
+    description: "",
+    price: "",
+    image: "",
+    hostel: "",
+    quantity: "", // Add quantity to formData state
   });
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,52 +27,50 @@ function SellProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { productName, category, description, price, image, upi_id, hostel, phone, quantity } = formData;
-  
+    const { sellerName, productName, category, description, price, image, hostel, quantity } = formData;
+
     const productData = {
-      name: productName,
+      sellerName,
+      productName,
       category,
       description,
       price,
       imageUrl: image,
-      upi_id: upi_id,
       hostel,
-      phone,
       quantity, // Include quantity in productData
     };
-  
+
     try {
-      const response = await fetch('http://localhost:5000/api/products', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/products", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(productData),
       });
-  
+
       if (response.ok) {
-        setSuccessMessage('Product Uploaded');
-        setErrorMessage(''); // Clear any previous error messages
+        setSuccessMessage("Product Uploaded");
+        setErrorMessage(""); // Clear any previous error messages
         setFormData({
-          productName: '',
-          category: '',
-          description: '',
-          price: '',
-          image: '',
-          upi_id: '',
-          hostel: '',
-          phone: '',
-          quantity: '', // Reset quantity field
+          sellerName: "",
+          productName: "",
+          category: "",
+          description: "",
+          price: "",
+          image: "",
+          hostel: "",
+          quantity: "", // Reset quantity field
         });
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Something went wrong.');
-        setSuccessMessage('');
+        setErrorMessage(errorData.message || "Something went wrong.");
+        setSuccessMessage("");
       }
     } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('Failed to upload product. Please try again.');
-      setSuccessMessage('');
+      console.error("Error:", error);
+      setErrorMessage("Failed to upload product. Please try again.");
+      setSuccessMessage("");
     }
   };
 
@@ -84,6 +81,15 @@ function SellProduct() {
         <h2>Sell Your Product</h2>
         {successMessage && <p className="success-message">{successMessage}</p>}
         <form className="sell-product-form" onSubmit={handleSubmit}>
+          <FormField
+            label="Seller Name *"
+            id="sellerName"
+            name="sellerName"
+            type="text"
+            required
+            value={formData.sellerName}
+            onChange={handleChange}
+          />
           <FormField
             label="Product Name *"
             id="productName"
@@ -139,15 +145,6 @@ function SellProduct() {
             onChange={handleChange}
           />
           <FormField
-            label="UPI_ID *"
-            id="upi_id"
-            name="upi_id"
-            type="email"
-            required
-            value={formData.upi_id}
-            onChange={handleChange}
-          />
-          <FormField
             label="Hostel *"
             id="hostel"
             name="hostel"
@@ -176,15 +173,6 @@ function SellProduct() {
             onChange={handleChange}
           />
           <FormField
-            label="Phone *"
-            id="phone"
-            name="phone"
-            type="tel"
-            required
-            value={formData.phone}
-            onChange={handleChange}
-          />
-          <FormField
             label="Quantity *" // Add quantity field
             id="quantity"
             name="quantity"
@@ -195,6 +183,7 @@ function SellProduct() {
           />
           <button type="submit">Submit</button>
         </form>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
       <Footer />
     </>
