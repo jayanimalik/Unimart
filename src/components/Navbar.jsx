@@ -6,9 +6,8 @@ import logo from "../assets/unipal_logo.png";
 import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0 hook
 import LoginButton from "./LoginButton";
 
-const Navbar = () => {
+const Navbar = ({ onSearch }) => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
-
   const [clicked, setClicked] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -18,7 +17,9 @@ const Navbar = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
+    const searchText = e.target.value;
+    setSearchText(searchText);
+    onSearch(searchText); // Call onSearch callback with current search text
   };
 
   return (

@@ -11,6 +11,7 @@ const Home = () => {
   const [category, setCategory] = useState("");
   const [hostel, setHostel] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [searchText, setSearchText] = useState(""); // State for search text
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     filterProducts();
-  }, [category, hostel]);
+  }, [category, hostel, searchText]); // Update filtered products when category, hostel, or searchText changes
 
   const filterProducts = () => {
     let tempProducts = products;
@@ -46,7 +47,17 @@ const Home = () => {
       tempProducts = tempProducts.filter(product => product.hostel === hostel);
     }
 
+    if (searchText) {
+      tempProducts = tempProducts.filter(product =>
+        product.productName.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+
     setFilteredProducts(tempProducts);
+  };
+
+  const handleSearch = (text) => {
+    setSearchText(text); // Update search text state
   };
 
   const renderProducts = () => {
@@ -66,7 +77,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <div className="products-page">
         <div className="filter-box">
           <button onClick={() => setShowFilters(!showFilters)}>Filter</button>
