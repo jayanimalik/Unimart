@@ -17,34 +17,33 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        const emailDomain = currentUser.email.split('@')[1];
-        if (emailDomain !== 'thapar.edu') {
-          await signOut(auth);
-          localStorage.removeItem("user");
-          setUser(null);
+      try {
+        if (currentUser) {
+          const emailDomain = currentUser.email.split('@')[1];
+          if (emailDomain !== 'thapar.edu') {
+            await signOut(auth);
+            localStorage.removeItem("user");
+            setUser(null);
+          } else {
+            setUser(currentUser);
+            localStorage.setItem("user", JSON.stringify(currentUser));
+          }
         } else {
-          setUser(currentUser);
-          localStorage.setItem("user", JSON.stringify(currentUser));
+          setUser(null);
+          localStorage.removeItem("user");
         }
+      } catch (error) {
+        console.error("Error during authentication:", error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
-
-    // Check if user data exists in local storage
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-      setIsLoading(false);
-    } else {
-      setIsLoading(false); // No stored user, authentication not complete
-    }
 
     return () => unsubscribe();
   }, []);
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader setIsLoading={setIsLoading} />;
   }
 
   return (
