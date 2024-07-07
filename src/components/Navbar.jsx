@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+// src/components/Navbar.jsx
+import React, { useState, useEffect } from "react";
 import "./NavbarStyles.css";
 import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
 import logo from "../assets/unipal_logo.png";
-import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "./LoginButton";
+import { auth, provider } from "../firebaseConfig";
+import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 
 const Navbar = ({ onSearch }) => {
-  const { isAuthenticated, logout, user } = useAuth0();
   const [clicked, setClicked] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleClick = () => {
     setClicked(!clicked);
@@ -19,7 +28,32 @@ const Navbar = ({ onSearch }) => {
   const handleSearchChange = (e) => {
     const searchText = e.target.value;
     setSearchText(searchText);
-    onSearch(searchText);
+    onSearch(searchText); // Call onSearch callback with current search text
+  };
+
+  const handleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const emailDomain = result.user.email.split('@')[1];
+      if (emailDomain !== 'thapar.edu') {
+        alert('Only thapar.edu email addresses are allowed.');
+        await signOut(auth);
+        setUser(null);
+      } else {
+        setUser(result.user);
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   return (
@@ -46,29 +80,33 @@ const Navbar = ({ onSearch }) => {
       <ul className={clicked ? "nav-menu active" : "nav-menu"}>
         {MenuItems.map((item, index) => (
           <li key={index}>
-            <Link className={item.cname} to={item.url}>
-              <i className={item.icon}></i>
-              {item.title}
-            </Link>
+            {(!user && (item.title === 'Wishlist' || item.title === 'Sell Your Product')) ? (
+              <button className="nav-links login-button" onClick={handleLogin}>
+                {item.icon && <i className={item.icon}></i>}
+                {item.title}
+              </button>
+            ) : (
+              <Link className={item.cname} to={item.url}>
+                {item.icon && <i className={item.icon}></i>}
+                {item.title}
+              </Link>
+            )}
           </li>
         ))}
-        {isAuthenticated && (
-          <li>
-            <Link className="nav-links" to="/profile">
-              Profile
-            </Link>
-          </li>
-        )}
         <li className="login-button-container">
-          {isAuthenticated ? (
-            <button
-              className="nav-links login-button"
-              onClick={() => logout({ returnTo: window.location.origin })}
-            >
-              Log Out
-            </button>
+          {user ? (
+            <>
+              <Link className="nav-links login-button" to="/profile"><i className="fa fa-user"></i>
+                Profile
+              </Link>
+              <button className="nav-links login-button" onClick={handleLogout}>
+                Log Out
+              </button>
+            </>
           ) : (
-            <LoginButton className="nav-links login-button" />
+            <button className="nav-links login-button" onClick={handleLogin}>
+              Log In
+            </button>
           )}
         </li>
       </ul>

@@ -12,7 +12,7 @@ export const MenuItems = [
     icon: "fa-solid fa-heart"
   },
   {
-    title: "Sell your product",
+    title: "Sell Your Product",
     url: "/sellproduct",
     cname: "nav-links",
     icon: "fa-solid fa-comments-dollar" 
@@ -24,4 +24,5 @@ export const MenuItems = [
     cname: "nav-links",
     icon: "fa-solid fa-circle-info"
   },
+
 ];

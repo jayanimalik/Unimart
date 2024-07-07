@@ -185,7 +185,7 @@ body.no-scroll {
 .login-button-container {
   background-color: #252525; /* Matches the navbar background color */
   border-radius: 8px; /* Optional: adds rounded corners */
-  padding: 0.7rem 1rem;
+  padding: 0.2rem ;
   list-style: none; /* Removes default list styling */
 }
 

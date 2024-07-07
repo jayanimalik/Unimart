@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Home from "./routes/Home";
@@ -6,45 +7,60 @@ import SellProduct from "./routes/sellproduct";
 import Wishlist from "./components/Wishlist";
 import Profile from "./routes/Profile";
 import Loader from "./components/Loading";
-import { Auth0Provider } from "@auth0/auth0-react";
 import { WishlistProvider } from "./components/WishlistContext";
-
-const domain = "chaitanya231971.jp.auth0.com";
-const clientId = "F0FiBaJJrvFYewRS8DDCoXGXSPMYXYi1";
+import { auth } from "./firebaseConfig";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fakeDataFetch = () => {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3500);  // Reduced delay for better user experience
-    };
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const emailDomain = currentUser.email.split('@')[1];
+        if (emailDomain !== 'thapar.edu') {
+          await signOut(auth);
+          localStorage.removeItem("user");
+          setUser(null);
+        } else {
+          setUser(currentUser);
+          localStorage.setItem("user", JSON.stringify(currentUser));
+        }
+      }
+      setIsLoading(false);
+    });
 
-    fakeDataFetch();
+    // Check if user data exists in local storage
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false); // No stored user, authentication not complete
+    }
+
+    return () => unsubscribe();
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <Auth0Provider domain={domain} clientId={clientId} redirectUri={window.location.origin}>
-      <WishlistProvider>
-        {isLoading ? (
-          <Loader setIsLoading={setIsLoading} />
-        ) : (
-          <Router>
-            <Routes>
-              <Route path="/" element={<Navigate to="/home" />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/sellproduct" element={<SellProduct />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={<Navigate to="/home" />} />
-            </Routes>
-          </Router>
-        )}
-      </WishlistProvider>
-    </Auth0Provider>
+    <WishlistProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/sellproduct" element={<SellProduct />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<Navigate to="/home" />} />
+        </Routes>
+      </Router>
+    </WishlistProvider>
   );
 }
 
