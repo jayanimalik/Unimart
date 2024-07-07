@@ -131,7 +131,7 @@ body.no-scroll {
 
   .menu-icons {
     display: block;
-    padding-right: 10px;
+    padding-right: 18px;
   }
 
   .search-bar {
@@ -165,11 +165,11 @@ body.no-scroll {
     display: flex; /* Use flexbox for alignment */
     width: 100%; /* Make search bar take full width */
     padding: 0 10px; /* Add padding for spacing */
-    display: none;
+    
   }
 
   .search-bar input[type="text"] {
-    width: 40%; /* Make input take full width */
+    width: 70%; /* Make input take full width */
     margin-right: 0; /* Remove right margin */
     margin-bottom: 10px; /* Add bottom margin for spacing */
     align-items: flex-start;
@@ -178,6 +178,7 @@ body.no-scroll {
   .search-bar button {
     width: 20%; /* Make button take full width */
     margin-left: 0; /* Remove left margin */
+    display: none;
   }
 }
 
