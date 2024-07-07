@@ -87,9 +87,6 @@ const Profile = () => {
                     <strong>Roll Number:</strong> {userData.rollNumber}
                   </p>
                   <p>
-                    <strong>Thapar Email:</strong> {userData.thaparEmail}
-                  </p>
-                  <p>
                     <strong>Branch:</strong> {userData.branch}
                   </p>
                   <p>
@@ -105,14 +102,6 @@ const Profile = () => {
                       name="rollNumber"
                       placeholder="Roll Number"
                       value={formData.rollNumber}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    <input
-                      type="email"
-                      name="thaparEmail"
-                      placeholder="Thapar Email"
-                      value={formData.thaparEmail}
                       onChange={handleInputChange}
                       required
                     />
