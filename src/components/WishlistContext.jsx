@@ -1,61 +1,58 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebaseConfig'; // Your Firebase configuration file
+import axios from 'axios';
 
 const WishlistContext = createContext();
 
+export const useWishlist = () => useContext(WishlistContext);
+
 export const WishlistProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState([]);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const fetchWishlist = async () => {
-      try {
-        const userId = "someUserId"; // Replace with actual user ID
-        const response = await fetch(`http://localhost:5000/api/wishlist/${userId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setWishlist(data);
-        } else {
-          console.error("Failed to fetch wishlist");
+      if (user) {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/wishlist/${user.uid}`);
+          setWishlist(response.data);
+        } catch (error) {
+          console.error('Error fetching wishlist:', error);
         }
-      } catch (error) {
-        console.error("Error fetching wishlist:", error);
       }
     };
 
     fetchWishlist();
-  }, []);
+  }, [user]);
 
-  const addToWishlist = async (product) => {
-    try {
-      const userId = "someUserId"; // Replace with actual user ID
-      const response = await fetch("http://localhost:5000/api/wishlist/add", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...product, userId }),
-      });
-      if (response.ok) {
-        setWishlist((prevWishlist) => [...prevWishlist, { ...product, userId }]);
-      } else {
-        console.error("Failed to add product to wishlist");
+  const addToWishlist = async (item) => {
+    if (user) {
+      try {
+        const response = await axios.post('http://localhost:5000/api/wishlist/add', {
+          ...item,
+          userId: user.uid,
+        });
+        setWishlist([...wishlist, response.data]);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          console.warn('Item already in wishlist');
+        } else {
+          console.error('Error adding to wishlist:', error);
+        }
       }
-    } catch (error) {
-      console.error("Error adding product to wishlist:", error);
     }
   };
+  
 
-  const removeFromWishlist = async (wishlistItemId) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/wishlist/remove/${wishlistItemId}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        setWishlist((prevWishlist) => prevWishlist.filter((item) => item._id !== wishlistItemId));
-      } else {
-        console.error("Failed to remove product from wishlist");
+  const removeFromWishlist = async (itemId) => {
+    if (user) {
+      try {
+        await axios.delete(`http://localhost:5000/api/wishlist/remove/${itemId}`);
+        setWishlist(wishlist.filter((item) => item._id !== itemId));
+      } catch (error) {
+        console.error('Error removing from wishlist:', error);
       }
-    } catch (error) {
-      console.error("Error removing product from wishlist:", error);
     }
   };
 
@@ -65,5 +62,3 @@ export const WishlistProvider = ({ children }) => {
     </WishlistContext.Provider>
   );
 };
-
-export const useWishlist = () => useContext(WishlistContext);

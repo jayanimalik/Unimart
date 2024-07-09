@@ -52,9 +52,13 @@ const wishlistSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   imageUrl: { type: String, required: true },
   hostel: { type: String, required: true },
+}, { 
+  unique: ['userId', 'productName'] // Adding unique constraint
 });
 
 const Wishlist = mongoose.model('Wishlist', wishlistSchema);
+
+
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -117,9 +121,15 @@ app.post('/api/wishlist/add', async (req, res) => {
   try {
     const { userId, productName, description, price, imageUrl, hostel } = req.body;
 
+    // Check if the product already exists in the wishlist
+    const existingItem = await Wishlist.findOne({ userId, productName });
+    if (existingItem) {
+      return res.status(400).json({ message: 'Product already in wishlist' });
+    }
+
     const newWishlistItem = new Wishlist({ userId, productName, description, price, imageUrl, hostel });
     await newWishlistItem.save();
-    res.status(201).json({ message: 'Product added to wishlist' });
+    res.status(201).json(newWishlistItem);
   } catch (error) {
     console.error('Error adding product to wishlist:', error);
     res.status(500).json({ message: `Error adding product to wishlist: ${error.message}` });
@@ -147,6 +157,7 @@ app.get('/api/wishlist/:userId', async (req, res) => {
     res.status(500).json({ message: `Error fetching wishlist: ${error.message}` });
   }
 });
+
 
 // User Routes
 app.get('/api/user/:uid', async (req, res) => {
