@@ -83,14 +83,26 @@ const Home = () => {
           <button onClick={() => setShowFilters(!showFilters)}>Filter</button>
           {showFilters && (
             <div className="filters">
-              <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                <option value="">All Categories</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Books">Books</option>
-                <option value="Home & Garden">Home & Garden</option>
-                <option value="Others">Others</option>
-              </select>
+            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="">All Categories</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Books">Books</option>
+              <option value="Sports">Sports</option>
+              <option value="Stationery">Stationery</option>
+              <option value="Services">Services</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Kitchenware">Kitchenware</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Art Supplies">Art Supplies</option>
+              <option value="Bicycles">Bicycles</option>
+              <option value="Musical Instruments">Musical Instruments</option>
+              <option value="Room Decor">Home Decor</option>
+              <option value="Food Items">Food Items</option>
+              <option value="Health & Fitness">Health & Fitness</option>
+              <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+              <option value="Others">Others</option>
+            </select>          
               <select value={hostel} onChange={(e) => setHostel(e.target.value)}>
                 <option value="">All Hostels</option>
                 <option value="A">A</option>

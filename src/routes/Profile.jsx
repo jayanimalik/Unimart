@@ -14,6 +14,7 @@ const Profile = () => {
     thaparEmail: "",
     branch: "",
     passingOutYear: "",
+    telegramUrl: "",  // New field for Telegram URL
   }); // State to store form data
 
   useEffect(() => {
@@ -47,8 +48,8 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/user", {
-        method: "POST",
+      const response = await fetch(`http://localhost:5000/api/user/${user.uid}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -81,7 +82,7 @@ const Profile = () => {
               <p>
                 <strong>Email:</strong> {user.email}
               </p>
-              {userData ? (
+              {userData && !isEditing ? (
                 <div>
                   <p>
                     <strong>Roll Number:</strong> {userData.rollNumber}
@@ -92,10 +93,13 @@ const Profile = () => {
                   <p>
                     <strong>Passing Out Year:</strong> {userData.passingOutYear}
                   </p>
+                  <p>
+                    <strong>Telegram URL:</strong> <a href={userData.telegramUrl} target="_blank" rel="noopener noreferrer">Chat on Telegram</a>
+                  </p>
+                  <button onClick={() => setIsEditing(true)}>Edit</button>
                 </div>
               ) : (
                 <div>
-                  <p>No additional data available. Please enter your data below:</p>
                   <form onSubmit={handleSubmit}>
                     <input
                       type="text"
@@ -120,6 +124,13 @@ const Profile = () => {
                       value={formData.passingOutYear}
                       onChange={handleInputChange}
                       required
+                    />
+                    <input
+                      type="url"
+                      name="telegramUrl"
+                      placeholder="Telegram URL"
+                      value={formData.telegramUrl}
+                      onChange={handleInputChange}
                     />
                     <button type="submit">Save</button>
                   </form>

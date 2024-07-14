@@ -111,7 +111,19 @@ function SellProduct() {
               { value: "Clothing", label: "Clothing" },
               { value: "Books", label: "Books" },
               { value: "Sports", label: "Sports" },
-              { value: "Others", label: "Others" },
+              { value: "Stationery", label: "Stationery" },              
+              { value: "Services", label: "Services" },
+              { value: "Furniture", label: "Furniture" },
+              { value: "Kitchenware", label: "Kitchenware" },
+              { value: "Accessories", label: "Accessories" },
+              { value: "Art Supplies", label: "Art Supplies" },
+              { value: "Bicycles", label: "Bicycles" },
+              { value: "Musical Instruments", label: "Musical Instruments" },
+              { value: "Room Decor", label: "Home Decor" },
+              { value: "Food Items", label: "Food Items" },
+              { value: "Health & Fitness", label: "Health & Fitness" },
+              { value: "Beauty & Personal Care", label: "Beauty & Personal Care" },
+              { value: "Others", label: "Others" }
             ]}
             required
             value={formData.category}
