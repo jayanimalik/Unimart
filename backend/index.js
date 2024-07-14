@@ -58,19 +58,17 @@ const wishlistSchema = new mongoose.Schema({
 
 const Wishlist = mongoose.model('Wishlist', wishlistSchema);
 
-
-
 // User Schema
 const userSchema = new mongoose.Schema({
   uid: { type: String, required: true, unique: true },
+  name: { type: String },
+  email: { type: String },
   rollNumber: { type: String },
-  thaparEmail: { type: String },
   branch: { type: String },
   passingOutYear: { type: Number },
 });
 
 const User = mongoose.model('User', userSchema);
-
 // Routes
 
 // Subscription Route
@@ -159,30 +157,53 @@ app.get('/api/wishlist/:userId', async (req, res) => {
 });
 
 
-// User Routes
+// Get user by UID
 app.get('/api/user/:uid', async (req, res) => {
   try {
     const { uid } = req.params;
-    const user = await User.findOne({ uid });
+    let user = await User.findOne({ uid });
+
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      // If user doesn't exist, create a new user entry
+      const newUser = new User({ uid });
+      await newUser.save();
+      user = newUser; // Set user to the newly created user
     }
+
     res.status(200).json(user);
   } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ message: `Error fetching user: ${error.message}` });
+    console.error('Error fetching/creating user:', error);
+    res.status(500).json({ message: `Error fetching/creating user: ${error.message}` });
   }
 });
 
-app.post('/api/user', async (req, res) => {
+// Update user details
+app.put('/api/user/:uid', async (req, res) => {
   try {
-    const { uid, rollNumber, thaparEmail, branch, passingOutYear } = req.body;
-    const user = new User({ uid, rollNumber, thaparEmail, branch, passingOutYear });
-    await user.save();
-    res.status(201).json({ message: 'User data saved successfully' });
+    const { uid } = req.params;
+    const { name, email, rollNumber, branch, passingOutYear } = req.body;
+
+    let user = await User.findOne({ uid });
+
+    if (!user) {
+      // If user doesn't exist, create a new user entry
+      const newUser = new User({ uid, name, email, rollNumber, branch, passingOutYear });
+      await newUser.save();
+      user = newUser; // Set user to the newly created user
+    } else {
+      // Update existing user details
+      user.name = name;
+      user.email = email;
+      user.rollNumber = rollNumber;
+      user.branch = branch;
+      user.passingOutYear = passingOutYear;
+      await user.save();
+    }
+
+    res.status(200).json(user);
   } catch (error) {
-    console.error('Error saving user data:', error);
-    res.status(500).json({ message: `Error saving user data: ${error.message}` });
+    console.error('Error updating user details:', error);
+    res.status(500).json({ message: `Error updating user details: ${error.message}` });
   }
 });
 

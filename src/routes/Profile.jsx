@@ -1,3 +1,5 @@
+// Profile.jsx (or your profile component)
+
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -11,10 +13,8 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false); // State to track if the user is entering data
   const [formData, setFormData] = useState({
     rollNumber: "",
-    thaparEmail: "",
     branch: "",
     passingOutYear: "",
-    telegramUrl: "",  // New field for Telegram URL
   }); // State to store form data
 
   useEffect(() => {
@@ -24,6 +24,12 @@ const Profile = () => {
         if (response.ok) {
           const data = await response.json();
           setUserData(data);
+          // Populate form data from fetched user data
+          setFormData({
+            rollNumber: data.rollNumber || "",
+            branch: data.branch || "",
+            passingOutYear: data.passingOutYear || "",
+          });
         } else {
           console.error("Failed to fetch user data");
         }
@@ -93,9 +99,6 @@ const Profile = () => {
                   <p>
                     <strong>Passing Out Year:</strong> {userData.passingOutYear}
                   </p>
-                  <p>
-                    <strong>Telegram URL:</strong> <a href={userData.telegramUrl} target="_blank" rel="noopener noreferrer">Chat on Telegram</a>
-                  </p>
                   <button onClick={() => setIsEditing(true)}>Edit</button>
                 </div>
               ) : (
@@ -124,13 +127,6 @@ const Profile = () => {
                       value={formData.passingOutYear}
                       onChange={handleInputChange}
                       required
-                    />
-                    <input
-                      type="url"
-                      name="telegramUrl"
-                      placeholder="Telegram URL"
-                      value={formData.telegramUrl}
-                      onChange={handleInputChange}
                     />
                     <button type="submit">Save</button>
                   </form>
