@@ -32,14 +32,15 @@ const Subscription = mongoose.model('Subscription', subscriptionSchema);
 
 // Product Schema
 const productSchema = new mongoose.Schema({
-  sellerName: { type: String, required: true },
-  productName: { type: String, required: true },
-  category: { type: String, required: true },
-  description: { type: String, required: true },
-  price: { type: Number, required: true },
-  imageUrl: { type: String, required: true },
-  hostel: { type: String, required: true },
-  quantity: { type: Number, required: true },
+  sellerName: String,
+  productName: String,
+  category: String,
+  description: String,
+  price: Number,
+  imageUrl: String,
+  hostel: String,
+  quantity: Number,
+  telegramUsername: String, // Add this field
 });
 
 const Product = mongoose.model('Product', productSchema);
@@ -52,6 +53,7 @@ const wishlistSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   imageUrl: { type: String, required: true },
   hostel: { type: String, required: true },
+  telegramUsername: { type: String, required: true }
 }, { 
   unique: ['userId', 'productName'] // Adding unique constraint
 });
@@ -103,9 +105,9 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    const { sellerName, productName, category, description, price, imageUrl, hostel, quantity } = req.body;
+    const { sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername} = req.body;
 
-    const newProduct = new Product({ sellerName, productName, category, description, price, imageUrl, hostel, quantity });
+    const newProduct = new Product({ sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername});
     await newProduct.save();
     res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
@@ -117,7 +119,7 @@ app.post('/api/products', async (req, res) => {
 // Wishlist Routes
 app.post('/api/wishlist/add', async (req, res) => {
   try {
-    const { userId, productName, description, price, imageUrl, hostel } = req.body;
+    const { userId, productName, description, price, imageUrl, hostel, telegramUsername } = req.body;
 
     // Check if the product already exists in the wishlist
     const existingItem = await Wishlist.findOne({ userId, productName });
@@ -125,7 +127,7 @@ app.post('/api/wishlist/add', async (req, res) => {
       return res.status(400).json({ message: 'Product already in wishlist' });
     }
 
-    const newWishlistItem = new Wishlist({ userId, productName, description, price, imageUrl, hostel });
+    const newWishlistItem = new Wishlist({ userId, productName, description, price, imageUrl, hostel, telegramUsername});
     await newWishlistItem.save();
     res.status(201).json(newWishlistItem);
   } catch (error) {

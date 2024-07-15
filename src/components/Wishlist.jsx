@@ -16,7 +16,9 @@ const Wishlist = () => {
           <p>{item.description}</p>
           <p>Hostel: {item.hostel}</p>
           <p>Price: ₹{item.price}</p>
-          <button className="chat-button">Start Chatting</button>
+          <a href={`https://t.me/${item.telegramUsername}`} target="_blank" rel="noopener noreferrer">
+            <button className="chat-button">Start Chatting</button>
+          </a>
           <button className="remove-button" onClick={() => removeFromWishlist(item._id)}>✖</button>
         </div>
       </div>

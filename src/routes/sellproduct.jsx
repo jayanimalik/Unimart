@@ -12,7 +12,8 @@ function SellProduct() {
     price: "",
     image: "",
     hostel: "",
-    quantity: "", // Add quantity to formData state
+    quantity: "",
+    telegramUsername: "" // Ensure telegramUsername is included in formData
   });
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,7 +28,7 @@ function SellProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { sellerName, productName, category, description, price, image, hostel, quantity } = formData;
+    const { sellerName, productName, category, description, price, image, hostel, quantity, telegramUsername } = formData;
 
     const productData = {
       sellerName,
@@ -37,7 +38,8 @@ function SellProduct() {
       price,
       imageUrl: image,
       hostel,
-      quantity, // Include quantity in productData
+      quantity,
+      telegramUsername // Ensure telegramUsername is included in productData
     };
 
     try {
@@ -50,9 +52,9 @@ function SellProduct() {
       });
 
       if (response.ok) {
-        const responseData = await response.json(); // Parse JSON response
+        const responseData = await response.json();
         setSuccessMessage(responseData.message || "Product Uploaded");
-        setErrorMessage(""); // Clear any previous error messages
+        setErrorMessage("");
         setFormData({
           sellerName: "",
           productName: "",
@@ -61,7 +63,8 @@ function SellProduct() {
           price: "",
           image: "",
           hostel: "",
-          quantity: "", // Reset quantity field
+          quantity: "",
+          telegramUsername: "" // Reset telegramUsername field
         });
       } else {
         const errorData = await response.json();
@@ -92,6 +95,15 @@ function SellProduct() {
             onChange={handleChange}
           />
           <FormField
+            label="Telegram Username *"
+            id="telegramUsername"
+            name="telegramUsername"
+            type="text"
+            required
+            value={formData.telegramUsername}
+            onChange={handleChange}
+          />
+          <FormField
             label="Product Name *"
             id="productName"
             name="productName"
@@ -111,7 +123,7 @@ function SellProduct() {
               { value: "Clothing", label: "Clothing" },
               { value: "Books", label: "Books" },
               { value: "Sports", label: "Sports" },
-              { value: "Stationery", label: "Stationery" },              
+              { value: "Stationery", label: "Stationery" },
               { value: "Services", label: "Services" },
               { value: "Furniture", label: "Furniture" },
               { value: "Kitchenware", label: "Kitchenware" },
@@ -186,7 +198,7 @@ function SellProduct() {
             onChange={handleChange}
           />
           <FormField
-            label="Quantity *" // Add quantity field
+            label="Quantity *"
             id="quantity"
             name="quantity"
             type="number"
