@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
-// Load environment variables
 dotenv.config();
 
 const app = express();
@@ -12,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to MongoDB
@@ -32,13 +30,13 @@ const Subscription = mongoose.model('Subscription', subscriptionSchema);
 
 // Product Schema
 const productSchema = new mongoose.Schema({
-  uid: { type: String, required: true }, // Add this field
+  uid: { type: String, required: true },
   sellerName: String,
   productName: String,
   category: String,
   description: String,
   price: Number,
-  imageUrl: String,
+  images: [String], // Array of image strings
   hostel: String,
   quantity: Number,
   telegramUsername: String,
@@ -52,12 +50,12 @@ const wishlistSchema = new mongoose.Schema({
   productName: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-  imageUrl: { type: String, required: true },
+  images: [String], // Array of image strings
   hostel: { type: String, required: true },
   telegramUsername: { type: String, required: true }
-}, { 
-  unique: ['userId', 'productName'] // Adding unique constraint
 });
+
+wishlistSchema.index({ userId: 1, productName: 1 }, { unique: true });
 
 const Wishlist = mongoose.model('Wishlist', wishlistSchema);
 
@@ -107,9 +105,9 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    const { uid, sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername} = req.body;
+    const { uid, sellerName, productName, category, description, price, images, hostel, quantity, telegramUsername} = req.body;
 
-    const newProduct = new Product({ uid, sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername});
+    const newProduct = new Product({ uid, sellerName, productName, category, description, price, images, hostel, quantity, telegramUsername});
     await newProduct.save();
     res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
@@ -142,11 +140,10 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
-
 // Wishlist Routes
 app.post('/api/wishlist/add', async (req, res) => {
   try {
-    const { userId, productName, description, price, imageUrl, hostel, telegramUsername } = req.body;
+    const { userId, productName, description, price, images, hostel, telegramUsername } = req.body;
 
     // Check if the product already exists in the wishlist
     const existingItem = await Wishlist.findOne({ userId, productName });
@@ -154,7 +151,7 @@ app.post('/api/wishlist/add', async (req, res) => {
       return res.status(400).json({ message: 'Product already in wishlist' });
     }
 
-    const newWishlistItem = new Wishlist({ userId, productName, description, price, imageUrl, hostel, telegramUsername});
+    const newWishlistItem = new Wishlist({ userId, productName, description, price, images, hostel, telegramUsername});
     await newWishlistItem.save();
     res.status(201).json(newWishlistItem);
   } catch (error) {
@@ -244,18 +241,6 @@ app.get('/api/products/user/:uid', async (req, res) => {
   } catch (error) {
     console.error('Error fetching user products:', error);
     res.status(500).json({ message: `Error fetching user products: ${error.message}` });
-  }
-});
-
-// Delete product by ID
-app.delete('/api/products/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Product.findByIdAndRemove(id);
-    res.status(200).json({ message: 'Product removed successfully' });
-  } catch (error) {
-    console.error('Error removing product:', error);
-    res.status(500).json({ message: `Error removing product: ${error.message}` });
   }
 });
 

@@ -1,7 +1,8 @@
+// WishlistContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebaseConfig'; // Your Firebase configuration file
-import axios from 'axios';
 
 const WishlistContext = createContext();
 
@@ -43,7 +44,6 @@ export const WishlistProvider = ({ children }) => {
       }
     }
   };
-  
 
   const removeFromWishlist = async (itemId) => {
     if (user) {

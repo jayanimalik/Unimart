@@ -12,10 +12,10 @@ function SellProduct() {
     category: "",
     description: "",
     price: "",
-    image: "",
+    images: [], // Changed to an array for multiple images
     hostel: "",
     quantity: "",
-    telegramUsername: "" // Ensure telegramUsername is included in formData
+    telegramUsername: ""
   });
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -30,21 +30,43 @@ function SellProduct() {
     }));
   };
 
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    // Ensure the total size of images does not exceed 1.5MB
+    const totalSize = files.reduce((acc, file) => acc + file.size, 0);
+    if (totalSize > 1.5 * 1024 * 1024) {
+      setErrorMessage("Total file size exceeds 1.5MB. Please choose smaller files.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64Image = reader.result.split(',')[1]; // Extract only the base64 data
+      setFormData(prevData => ({
+        ...prevData,
+        images: [...prevData.images, base64Image]
+      }));
+    };
+
+    files.forEach(file => reader.readAsDataURL(file));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { sellerName, productName, category, description, price, image, hostel, quantity, telegramUsername } = formData;
+    const { sellerName, productName, category, description, price, images, hostel, quantity, telegramUsername } = formData;
 
     const productData = {
       sellerName,
       productName,
       category,
       description,
-      price,
-      imageUrl: image,
+      price: Number(price), // Ensure price is converted to number
+      images,
       hostel,
-      quantity,
+      quantity: Number(quantity), // Ensure quantity is converted to number
       telegramUsername,
-      uid: user.uid // Ensure uid is included in productData
+      uid: user.uid
     };
 
     try {
@@ -66,10 +88,10 @@ function SellProduct() {
           category: "",
           description: "",
           price: "",
-          image: "",
+          images: [], // Reset images array
           hostel: "",
           quantity: "",
-          telegramUsername: "" // Reset telegramUsername field
+          telegramUsername: ""
         });
       } else {
         const errorData = await response.json();
@@ -122,42 +144,26 @@ function SellProduct() {
             id="category"
             name="category"
             type="select"
-            options={[
-              { value: "", label: "Select Category" },
-              { value: "Electronics", label: "Electronics" },
-              { value: "Clothing", label: "Clothing" },
-              { value: "Books", label: "Books" },
-              { value: "Sports", label: "Sports" },
-              { value: "Stationery", label: "Stationery" },
-              { value: "Services", label: "Services" },
-              { value: "Furniture", label: "Furniture" },
-              { value: "Kitchenware", label: "Kitchenware" },
-              { value: "Accessories", label: "Accessories" },
-              { value: "Art Supplies", label: "Art Supplies" },
-              { value: "Bicycles", label: "Bicycles" },
-              { value: "Musical Instruments", label: "Musical Instruments" },
-              { value: "Room Decor", label: "Home Decor" },
-              { value: "Food Items", label: "Food Items" },
-              { value: "Health & Fitness", label: "Health & Fitness" },
-              { value: "Beauty & Personal Care", label: "Beauty & Personal Care" },
-              { value: "Others", label: "Others" }
-            ]}
             required
             value={formData.category}
             onChange={handleChange}
+            options={[
+              "Electronics", "Clothing", "Books", "Sports", "Stationery", "Services", "Furniture", "Kitchenware",
+              "Accessories", "Art Supplies", "Bicycles", "Musical Instruments", "Room Decor", "Food Items",
+              "Health & Fitness", "Beauty & Personal Care", "Others"
+            ]}
           />
           <FormField
             label="Description *"
             id="description"
             name="description"
             type="textarea"
-            rows="4"
             required
             value={formData.description}
             onChange={handleChange}
           />
           <FormField
-            label="Price (Rupees) *"
+            label="Price *"
             id="price"
             name="price"
             type="number"
@@ -166,41 +172,26 @@ function SellProduct() {
             onChange={handleChange}
           />
           <FormField
-            label="Image URL *"
-            id="image"
-            name="image"
-            type="text"
+            label="Images *"
+            id="images"
+            name="images"
+            type="file"
+            accept="image/*"
+            multiple // Allow multiple image selection
             required
-            value={formData.image}
-            onChange={handleChange}
+            onChange={handleFileChange}
           />
           <FormField
             label="Hostel *"
             id="hostel"
             name="hostel"
             type="select"
-            options={[
-              { value: "", label: "Select Hostel" },
-              { value: "A", label: "A" },
-              { value: "B", label: "B" },
-              { value: "C", label: "C" },
-              { value: "D", label: "D" },
-              { value: "E", label: "E" },
-              { value: "G", label: "G" },
-              { value: "H", label: "H" },
-              { value: "I", label: "I" },
-              { value: "J", label: "J" },
-              { value: "K", label: "K" },
-              { value: "L", label: "L" },
-              { value: "M", label: "M" },
-              { value: "N", label: "N" },
-              { value: "O", label: "O" },
-              { value: "PG", label: "PG" },
-              { value: "Q", label: "Q" },
-            ]}
             required
             value={formData.hostel}
             onChange={handleChange}
+            options={[
+              "A", "B", "C", "D", "E", "G", "H", "I", "J", "K", "L", "M", "N", "O", "PG", "Q"
+            ]}
           />
           <FormField
             label="Quantity *"
@@ -211,37 +202,45 @@ function SellProduct() {
             value={formData.quantity}
             onChange={handleChange}
           />
-          <button type="submit">Submit</button>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <button type="submit">Upload</button>
         </form>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
       <Footer />
     </>
   );
 }
 
-const FormField = ({ label, id, name, type, options, rows, required, value, onChange }) => {
+const FormField = ({ label, id, name, type, value, onChange, required, accept, options }) => {
   return (
     <div className="form-group">
       <label htmlFor={id}>{label}</label>
       {type === "select" ? (
-        <select id={id} name={name} required={required} value={value} onChange={onChange}>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
+        <select id={id} name={name} value={value} onChange={onChange} required={required}>
+          <option value="">Select an option</option>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
             </option>
           ))}
         </select>
       ) : type === "textarea" ? (
-        <textarea id={id} name={name} rows={rows} required={required} value={value} onChange={onChange}></textarea>
+        <textarea
+          id={id}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+        />
       ) : (
         <input
           type={type}
           id={id}
           name={name}
-          required={required}
           value={value}
           onChange={onChange}
+          required={required}
+          accept={accept}
         />
       )}
     </div>

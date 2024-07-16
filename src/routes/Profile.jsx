@@ -1,5 +1,3 @@
-// Profile.jsx
-
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -89,18 +87,21 @@ const Profile = () => {
     }
   };
 
-  const handleRemoveProduct = async (productId) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        setProducts(products.filter((product) => product._id !== productId));
-      } else {
-        console.error("Failed to remove product");
+  const handleRemoveProduct = async (productId, productName) => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete "${productName}"?`);
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          setProducts(products.filter((product) => product._id !== productId));
+        } else {
+          console.error("Failed to remove product");
+        }
+      } catch (error) {
+        console.error("Error removing product:", error);
       }
-    } catch (error) {
-      console.error("Error removing product:", error);
     }
   };
 
@@ -165,26 +166,27 @@ const Profile = () => {
               )}
             </div>
           )}
-<h2>Your Products</h2>
-{products.length > 0 ? (
-  <ul className="product-list">
-    {products.map((product) => (
-      <li key={product._id} className="product-item">
-        <img src={product.imageUrl} alt={product.productName} className="product-image" />
-        <div className="product-details">
-          <h3>{product.productName}</h3>
-          <p>{product.description}</p>
-          <p>Price: {product.price}</p>
-          <p>Hostel: {product.hostel}</p>
-          <button onClick={() => handleRemoveProduct(product._id)}>Remove</button>
-        </div>
-      </li>
-    ))}
-    </ul>
-  ) : (
-    <p>No products uploaded yet.</p>
-  )}
-
+          <h2>Your Products</h2>
+          {products.length > 0 ? (
+            <ul className="product-list">
+              {products.map((product) => (
+                <li key={product._id} className="product-item">
+                  <img src={`data:image/jpeg;base64,${product.images[0]}`} // Assuming first image for simplicity
+          alt={product.productName}
+          className="product-image" />
+                  <div className="product-details">
+                    <h3>{product.productName}</h3>
+                    <p>{product.description}</p>
+                    <p>Price: {product.price}</p>
+                    <p>Hostel: {product.hostel}</p>
+                    <button onClick={() => handleRemoveProduct(product._id, product.productName)}>Remove</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No products uploaded yet.</p>
+          )}
         </div>
       </div>
       <Footer />
