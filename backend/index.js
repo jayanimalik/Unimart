@@ -32,6 +32,7 @@ const Subscription = mongoose.model('Subscription', subscriptionSchema);
 
 // Product Schema
 const productSchema = new mongoose.Schema({
+  uid: { type: String, required: true }, // Add this field
   sellerName: String,
   productName: String,
   category: String,
@@ -40,7 +41,7 @@ const productSchema = new mongoose.Schema({
   imageUrl: String,
   hostel: String,
   quantity: Number,
-  telegramUsername: String, // Add this field
+  telegramUsername: String,
 });
 
 const Product = mongoose.model('Product', productSchema);
@@ -71,6 +72,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);
+
 // Routes
 
 // Subscription Route
@@ -105,9 +107,9 @@ app.get('/api/products', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    const { sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername} = req.body;
+    const { uid, sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername} = req.body;
 
-    const newProduct = new Product({ sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername});
+    const newProduct = new Product({ uid, sellerName, productName, category, description, price, imageUrl, hostel, quantity, telegramUsername});
     await newProduct.save();
     res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
@@ -115,6 +117,31 @@ app.post('/api/products', async (req, res) => {
     res.status(500).json({ message: `Error adding product: ${error.message}` });
   }
 });
+
+// Delete product by ID
+app.delete('/api/products/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the product to be deleted
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Remove the product from Product collection
+    await product.remove();
+
+    // Remove the product from Wishlist collection
+    await Wishlist.deleteMany({ productName: product.productName });
+
+    res.status(200).json({ message: 'Product removed successfully' });
+  } catch (error) {
+    console.error('Error removing product:', error);
+    res.status(500).json({ message: `Error removing product: ${error.message}` });
+  }
+});
+
 
 // Wishlist Routes
 app.post('/api/wishlist/add', async (req, res) => {
@@ -157,7 +184,6 @@ app.get('/api/wishlist/:userId', async (req, res) => {
     res.status(500).json({ message: `Error fetching wishlist: ${error.message}` });
   }
 });
-
 
 // Get user by UID
 app.get('/api/user/:uid', async (req, res) => {
@@ -206,6 +232,30 @@ app.put('/api/user/:uid', async (req, res) => {
   } catch (error) {
     console.error('Error updating user details:', error);
     res.status(500).json({ message: `Error updating user details: ${error.message}` });
+  }
+});
+
+// Fetch products by user UID
+app.get('/api/products/user/:uid', async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const products = await Product.find({ uid });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error fetching user products:', error);
+    res.status(500).json({ message: `Error fetching user products: ${error.message}` });
+  }
+});
+
+// Delete product by ID
+app.delete('/api/products/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Product.findByIdAndRemove(id);
+    res.status(200).json({ message: 'Product removed successfully' });
+  } catch (error) {
+    console.error('Error removing product:', error);
+    res.status(500).json({ message: `Error removing product: ${error.message}` });
   }
 });
 

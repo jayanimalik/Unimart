@@ -1,4 +1,4 @@
-// Profile.jsx (or your profile component)
+// Profile.jsx
 
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
@@ -10,6 +10,7 @@ import "./Profile.css"; // Import styles from Profile.css
 const Profile = () => {
   const [user] = useAuthState(auth);
   const [userData, setUserData] = useState(null); // State to store additional user data
+  const [products, setProducts] = useState([]); // State to store user products
   const [isEditing, setIsEditing] = useState(false); // State to track if the user is entering data
   const [formData, setFormData] = useState({
     rollNumber: "",
@@ -38,8 +39,23 @@ const Profile = () => {
       }
     };
 
+    const fetchUserProducts = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/products/user/${user.uid}`);
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          console.error("Failed to fetch user products");
+        }
+      } catch (error) {
+        console.error("Error fetching user products:", error);
+      }
+    };
+
     if (user) {
       fetchUserData();
+      fetchUserProducts();
     }
   }, [user]);
 
@@ -70,6 +86,21 @@ const Profile = () => {
       }
     } catch (error) {
       console.error("Error saving user data:", error);
+    }
+  };
+
+  const handleRemoveProduct = async (productId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setProducts(products.filter((product) => product._id !== productId));
+      } else {
+        console.error("Failed to remove product");
+      }
+    } catch (error) {
+      console.error("Error removing product:", error);
     }
   };
 
@@ -134,6 +165,26 @@ const Profile = () => {
               )}
             </div>
           )}
+<h2>Your Products</h2>
+{products.length > 0 ? (
+  <ul className="product-list">
+    {products.map((product) => (
+      <li key={product._id} className="product-item">
+        <img src={product.imageUrl} alt={product.productName} className="product-image" />
+        <div className="product-details">
+          <h3>{product.productName}</h3>
+          <p>{product.description}</p>
+          <p>Price: {product.price}</p>
+          <p>Hostel: {product.hostel}</p>
+          <button onClick={() => handleRemoveProduct(product._id)}>Remove</button>
+        </div>
+      </li>
+    ))}
+    </ul>
+  ) : (
+    <p>No products uploaded yet.</p>
+  )}
+
         </div>
       </div>
       <Footer />

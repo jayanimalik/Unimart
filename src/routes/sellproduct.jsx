@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebaseConfig";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import "./sellproduct.css";
+import './sellproduct.css';
 
 function SellProduct() {
   const [formData, setFormData] = useState({
@@ -17,6 +19,8 @@ function SellProduct() {
   });
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [user] = useAuthState(auth); // Get the currently logged-in user
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +43,8 @@ function SellProduct() {
       imageUrl: image,
       hostel,
       quantity,
-      telegramUsername // Ensure telegramUsername is included in productData
+      telegramUsername,
+      uid: user.uid // Ensure uid is included in productData
     };
 
     try {

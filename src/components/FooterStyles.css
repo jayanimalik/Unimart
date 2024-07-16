@@ -99,12 +99,13 @@
 @media (max-width: 768px) {
   .footer .left-section,
   .footer .right-section {
-    width: 45%; /* Change to match normal screen width */
+    width: 65%; /* Change to match normal screen width */
     margin-bottom: 0; /* Remove additional space between sections */
   }
 
   .footer .footer-divider {
     height: 150px; /* Match normal screen height */
     margin: 0 20px; /* Match normal screen margin */
+    display: none;
   }
 }
